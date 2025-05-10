@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Neha Sharma</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #ff5722;
+      padding: 10px 20px;
+      color: white;
+      flex-wrap: wrap;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-container img {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+      border-radius: 50%;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      margin-top: 10px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+    }
+
+    .search-bar input {
+      padding: 5px;
+      border: none;
+      border-radius: 4px;
+      outline: none;
+      width: 200px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      background: url('https://www.shutterstock.com/image-photo/junk-food-double-border-over-260nw-2137640557.jpg') no-repeat center center/cover;
+      color: rgb(23, 21, 21);
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+      text-shadow: 1px 1px 4px #000;
+    }
+
+    .hero p {
+      font-size: 18px;
+      text-shadow: 1px 1px 3px #000;
+    }
+
+    .hero img {
+      width: 300px;
+      height: auto;
+      border-radius: 15px;
+      margin: 20px 0;
+      border: 2px solid white;
+    }
+
+    .buttons {
+      margin-top: 30px;
+    }
+
+    .buttons a {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .buttons a:hover {
+      background-color: #45a049;
+    }
+
+    .carousel-card {
+      background-color: #fffaf0;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 220px;
+      flex-shrink: 0;
+    }
+
+    .carousel-card img {
+      width: 100%;
+      border-radius: 8px;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .carousel-card h3 {
+      margin: 10px 0 5px;
+    }
+
+    .carousel-card p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+
+    .carousel-card .rating,
+    .carousel-card .price,
+    .carousel-card .offer {
+      font-weight: bold;
+      margin: 3px 0;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .nav-links {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .search-bar {
+        margin-top: 10px;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="logo-container">
+      <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" alt="Logo">
+      <strong>Foodee</strong>
+
+    </div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="about.html">About</a>
+      <a href="history.html">Order History</a>
+      <a href="cart.html">Cart</a>
+      <a href="Login.html">Login</a>
+      <a href="signup.html">Signup</a>
+      <a href="admin.html">Admin</a>
+      <!-- <div class="search-bar">
+        <input type="text" placeholder="Search food...">
+      </div> -->
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <h1>Welcome to Foodee</h1>
+    <p>"When Hunger Hits, Hit Foodee."</p>
+    <div class="buttons">
+      <a href="menu.html">Go to Menu</a>
+      <a href="history.html">View Order History</a>
+    </div>
+  </div>
+
+  <section style="text-align:center; padding:50px 0; background-color: #fffaf0;">
+    <h2 style="font-size: 30px; margin-bottom: 20px;">Popular Dishes</h2>
+  
+    <div style="position:relative; overflow:hidden; max-width: 1000px; margin:auto;">
+      <div id="carousel-track" style="display: flex; transition: transform 0.5s ease-in-out; gap: 20px;">
+        <div class="carousel-card">
+          <img src="https://feeds.abplive.com/onecms/images/uploaded-images/2023/10/11/fa6be68d80b1f9676ece11173a8b6ded1697004727372557_original.jpg">
+          <h3>Veg Biryani</h3>
+          <p>Spicy and flavorful biryani with raita.</p>
+          <div class="rating">⭐ 4.5</div>
+          <div class="price">₹120</div>
+        </div>
+        <div class="carousel-card">
+          <img src="https://www.spicypunch.com/wp-content/uploads/2020/07/veg-pizza-1024x727.jpg">
+          <h3>Veg Pizza</h3>
+          <p>Cheesy delight with fresh veggies.</p>
+          <div class="rating">⭐5</div>
+          <div class="price">₹200</div>
+        </div>
+        <div class="carousel-card">
+          <img src="https://fitelo.co/wp-content/uploads/2022/09/Pasta.png">
+          <h3>White Sauce Pasta</h3>
+          <p>Creamy pasta with veggies and cheese.</p>
+          <div class="rating">⭐ 4.5</div>
+          <div class="price">₹80</div>
+        </div>
+        <div class="carousel-card">
+          <img src="https://www.thespruceeats.com/thmb/UnVh_-znw7ikMUciZIx5sNqBtTU=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/steamed-momos-wontons-1957616-hero-01-1c59e22bad0347daa8f0dfe12894bc3c.jpg" alt="Pasta">
+          <h3>Momos</h3>
+          <p>Well fried and yummy taste.</p>
+          <div class="rating">⭐5</div>
+          <div class="price">₹80</div>
+        </div>
+        <div class="carousel-card">
+          <img id="Cold Coffee" src="https://tvanamm.com/wp-content/uploads/2024/01/Cold-Coffee.jpg" alt="Burger">
+          <h3>Cold Coffee</h3>
+          <p>Sweet and cold coofee</p>
+          <div class="rating">⭐4.5</div>
+          <div class="price">₹150</div>
+        </div>
+        <div class="carousel-card">
+          <img id="Gulab Jamun" src="https://i0.wp.com/curryandvanilla.com/wp-content/uploads/2016/12/rabri-with-jamun2-1.jpg?resize=713%2C666&ssl=1" alt="Gulab Jamun">
+          <h3>Gulab Jamun</h3>
+          <p>Yeh! What an amazing taste</p>
+          <div class="rating">⭐5</div>
+          <div class="price">₹200</div>
+        </div>
+
+        <div class="carousel-card">
+          <img id="Colddrinks" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRD12OCxU4Th3aX7Mj3vPBcnVJEf5WhIAzWEQ&s" alt="Gulab Jamun">
+          <h3>Jalebi</h3>
+          <p>Ek baar khae ,, baar baar aaye  !!</p>
+          <div class="rating">⭐4.5</div>
+          <div class="price">₹80</div>
+        </div>
+        <div class="carousel-card">
+          <img id="burger" src="https://th.bing.com/th/id/R.06eac032ecbd95ecd673503cafa04111?rik=kmxgzOcjL9nRZA&riu=http%3a%2f%2fwww.recipemasters.in%2fwp-content%2fuploads%2f2015%2f06%2fDSC_0213-1024x678.jpg&ehk=KUQgtndi3%2beJklzTCyfolm6bgoEtehlLZgD2YEIqBiM%3d&risl=&pid=ImgRaw&r=0">
+          <h3>Cheese Burger</h3>
+          <p>Double patties layered with cheddar cheese.</p>
+          <div class="rating">⭐5</div>
+          <div class="price">₹10</div>
+        </div>
+      </div>
+    </div>
+  
+    <div style="margin-top: 20px;">
+      <button onclick="moveCarousel(-1)" style="padding:10px 20px; font-size:16px;">←</button>
+      <button onclick="moveCarousel(1)" style="padding:10px 20px; font-size:16px;">→</button>
+    </div>
+  </section>
+  
+
+  <!-- Footer -->
+  <footer style="background-color: #f2f2f2; padding: 40px 20px; font-family: Arial, sans-serif;">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; max-width: 1200px; margin: auto; color: #333;">
+      <div style="flex: 1; min-width: 200px;">
+        <div style="display: flex; align-items: center;">
+          <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" alt="Foodee Logo" style="width: 40px; height: 40px; margin-right: 10px;">
+          <h2 style="margin: 0;">Foodee</h2>
+        </div>
+        <p style="margin-top: 10px;">© 2025 Foodee Limited</p>
+      </div>
+
+      <div style="flex: 1; min-width: 150px;">
+        <h4>Company</h4>
+        <p>About Us</p>
+        <p>Careers</p>
+        <p>Our Team</p>
+        <p>Campus Services</p>
+      </div>
+
+      <div style="flex: 1; min-width: 150px;">
+        <h4>Contact Us</h4>
+        <p>Help & Support</p>
+        <p>Partner with Us</p>
+        <p>Feedback</p>
+      </div>
+
+      <div style="flex: 1; min-width: 150px;">
+        <h4>Available In</h4>
+        <p>Delhi</p>
+        <p>Gurgaon</p>
+        <p>Hyderabad</p>
+        <p>Chandigarh</p>
+        <p><select><option>More Cities</option></select></p>
+      </div>
+
+      <div style="flex: 1; min-width: 150px;">
+        <h4>Legal</h4>
+        <p>Terms & Conditions</p>
+        <p>Privacy Policy</p>
+        <p>Cookie Policy</p>
+      </div>
+
+      <div style="flex: 1; min-width: 150px;">
+        <h4>Social Links</h4>
+        <div style="font-size: 20px;">
+          <a href="#" style="margin-right: 10px;">🔗</a>
+          <a href="#" style="margin-right: 10px;">📸</a>
+          <a href="#" style="margin-right: 10px;">📘</a>
+          <a href="#" style="margin-right: 10px;">📌</a>
+          <a href="#">🐦</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    let position = 0;
+
+    function moveCarousel(direction) {
+      const track = document.getElementById('carousel-track');
+      const cards = document.querySelectorAll('.carousel-card');
+      const cardWidth = cards[0].offsetWidth + 20;
+      const maxPosition = (cards.length - 1) * cardWidth;
+
+      position += direction * cardWidth;
+      if (position < 0) position = 0;
+      if (position > maxPosition) position = maxPosition;
+
+      track.style.transform = `translateX(-${position}px)`;
+    }
+  </script>
+
+<!-- <script>
+  if (!localStorage.getItem("isLoggedIn")) {
+    window.location.href = "login.html";
+  }
+</script> -->
+
+</body>
+</html>
