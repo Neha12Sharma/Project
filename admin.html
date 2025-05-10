@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard | Foodee</title>
+  <style>
+    body { font-family: Arial; padding: 2rem; background: #fff; }
+    .order-card {
+      border-left: 4px solid #ff5722;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background: #f9f9f9;
+      position: relative;
+    }
+    .delivered {
+      border-color: green;
+      background: #e8f5e9;
+    }
+    .summary {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: #e3f2fd;
+      border-left: 4px solid #2196f3;
+    }
+    .hidden { display: none; }
+    input, button { padding: 0.5rem; margin: 0.5rem 0; }
+    .order-actions {
+      margin-top: 1rem;
+    }
+    .order-actions button {
+      margin-right: 0.5rem;
+      padding: 0.3rem 0.6rem;
+      font-size: 0.9rem;
+    }
+    #homeButtonContainer {
+      margin-top: 2rem;
+    }
+    #homeButtonContainer button {
+      padding: 0.7rem 1.2rem;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- Admin Login -->
+  <div id="login-section">
+    <h2>Admin Login</h2>
+    <input type="text" id="adminUser" placeholder="Username"><br>
+    <input type="password" id="adminPass" placeholder="Password"><br>
+    <button onclick="login()">Login</button>
+    <p id="loginMsg" style="color: red;"></p>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="dashboard" class="hidden">
+    <h1>Admin Dashboard</h1>
+    <p><strong>Total Orders:</strong> <span id="totalOrders"></span></p>
+    <div id="orders"></div>
+    <div id="itemSummary" class="summary"></div>
+
+    <!-- Go to Home Page button -->
+    <div id="homeButtonContainer" class="hidden">
+      <button onclick="goHome()">Go to Home Page</button>
+    </div>
+  </div>
+
+  <script>
+    function login() {
+      const user = document.getElementById('adminUser').value;
+      const pass = document.getElementById('adminPass').value;
+      const loginMsg = document.getElementById('loginMsg');
+
+      if (user === 'kajal' && pass === 'kajal123') {
+        document.getElementById('login-section').classList.add('hidden');
+        document.getElementById('dashboard').classList.remove('hidden');
+        loadOrders();
+      } else {
+        loginMsg.textContent = 'Invalid credentials';
+      }
+    }
+
+    function loadOrders() {
+      let orders = JSON.parse(localStorage.getItem('allOrders')) || [];
+      const container = document.getElementById('orders');
+      const totalOrders = document.getElementById('totalOrders');
+      const itemSummary = {};
+
+      totalOrders.textContent = orders.length;
+
+      if (!orders.length) {
+        container.innerHTML = '<p>No orders yet.</p>';
+        document.getElementById('itemSummary').innerHTML = '';
+        checkAllDelivered(orders);
+        return;
+      }
+
+      container.innerHTML = orders.map((o, index) => {
+        o.items.forEach(i => {
+          if (!itemSummary[i.item]) {
+            itemSummary[i.item] = 0;
+          }
+          itemSummary[i.item] += parseInt(i.qty);
+        });
+
+        const items = o.items.map(i =>
+          `<li>${i.item} × ${i.qty} — ₹${i.price}</li>`
+        ).join('');
+
+        return `
+          <div class="order-card ${o.delivered ? 'delivered' : ''}" id="order-${index}">
+            <h2>${o.name}</h2>
+            <p><strong>Address:</strong> ${o.address}</p>
+            <p><strong>Payment:</strong> ${o.payment}</p>
+            <p><strong>Placed At:</strong> ${o.placedAt}</p>
+            <p><strong>ETA:</strong> ${o.deliveryTime}</p>
+            <ul>${items}</ul>
+            <div class="order-actions">
+              <button onclick="markDelivered(${index})">${o.delivered ? 'Delivered' : 'Mark as Delivered'}</button>
+              <button onclick="deleteOrder(${index})" style="color:red;">Delete</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const summaryHtml = Object.entries(itemSummary).map(([item, count]) =>
+        `<li><strong>${item}</strong>: ${count} ordered</li>`
+      ).join('');
+      document.getElementById('itemSummary').innerHTML = `
+        <h3>Item Summary</h3>
+        <ul>${summaryHtml}</ul>
+      `;
+
+      checkAllDelivered(orders);
+    }
+
+    function deleteOrder(index) {
+      const confirmed = confirm("Are you sure you want to delete this order?");
+      if (!confirmed) return;
+
+      let orders = JSON.parse(localStorage.getItem('allOrders')) || [];
+      orders.splice(index, 1);
+      localStorage.setItem('allOrders', JSON.stringify(orders));
+      loadOrders();
+    }
+
+    function markDelivered(index) {
+      let orders = JSON.parse(localStorage.getItem('allOrders')) || [];
+      orders[index].delivered = true;
+      localStorage.setItem('allOrders', JSON.stringify(orders));
+      loadOrders();
+    }
+
+    function goHome() {
+      window.location.href = 'index2.html'; // Change if your homepage is different
+    }
+
+    function checkAllDelivered(orders) {
+      const homeBtn = document.getElementById('homeButtonContainer');
+      const allDelivered = orders.length > 0 && orders.every(o => o.delivered);
+      homeBtn.classList.toggle('hidden', !allDelivered);
+    }
+  </script>
+</body>
+</html>
