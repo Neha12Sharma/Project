@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Foodee Menu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fffaf0;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #ff7043;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    header a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+    }
+    .main-container {
+      display: flex;
+    }
+    .menu-section {
+      flex: 3;
+      padding: 30px;
+    }
+    .section-title {
+      font-size: 22px;
+      color: #ff5722;
+      margin: 20px 0 10px;
+      border-bottom: 2px solid #ff5722;
+      padding-bottom: 5px;
+    }
+    .item-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .menu-card {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .menu-card:hover {
+      transform: translateY(-5px);
+    }
+    .menu-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+    .menu-details {
+      padding: 15px;
+    }
+    .menu-details h3 {
+      margin: 0 0 8px;
+      color: #333;
+    }
+    .menu-details p {
+      margin: 5px 0;
+      font-size: 14px;
+      color: #666;
+    }
+    .price-rating {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+    .price {
+      font-weight: bold;
+      color: #388e3c;
+    }
+    .rating {
+      color: #ffa000;
+      font-weight: bold;
+    }
+    .add-cart {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      background-color: #ff5722;
+      color: white;
+      border: none;
+      border-radius: 0 0 12px 12px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .cart-sidebar {
+      flex: 1;
+      background: #fff;
+      border-left: 2px solid #eee;
+      padding: 20px;
+      position: sticky;
+      top: 70px;
+      height: calc(100vh - 70px);
+      overflow-y: auto;
+    }
+    .cart-sidebar h2 {
+      margin-top: 0;
+      font-size: 20px;
+      color: #ff5722;
+    }
+    .cart-item {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    .cart-item h4 {
+      margin: 0;
+      font-size: 16px;
+    }
+    .cart-item span {
+      font-size: 14px;
+      color: #666;
+    }
+    .cart-item button {
+      margin: 0 3px;
+      padding: 2px 6px;
+      font-size: 14px;
+      background-color: #eee;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .popup {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #4caf50;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      display: none;
+      z-index: 2000;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Foodee Menu</h1>
+    <a href="cart.html">🛒 Go to Cart</a>
+  </header>
+
+  <div class="main-container">
+    <div class="menu-section">
+
+      <!-- Sweet Bites -->
+      <h2 class="section-title">🍰 Sweet Bites</h2>
+      <div class="item-grid">
+        <div class="menu-card">
+          <img src="https://c1.staticflickr.com/1/758/22152453363_3e4eaa0862_z.jpg" alt="Gulab Jamun">
+          <div class="menu-details">
+            <h3>Gulab Jamun</h3>
+            <p>Soft fried balls soaked in rose sugar syrup.</p>
+            <div class="price-rating">
+              <span class="price">₹60</span>
+              <span class="rating">⭐ 4.8</span>
+            </div>
+          </div>
+          <button onclick="addToCart('Gulab Jamun', 60)" class="add-cart">Add to Cart</button>
+        </div>
+        <div class="menu-card">
+          <img src="https://t4.ftcdn.net/jpg/02/23/02/33/360_F_223023382_DkOOzyFXfzOpHDXVSgGb2xmS1uZOkzNn.jpg" alt="Rasgulla">
+          <div class="menu-details">
+            <h3>Rasgulla</h3>
+            <p>Juicy and spongy sweet delight.</p>
+            <div class="price-rating">
+              <span class="price">₹50</span>
+              <span class="rating">⭐ 4.6</span>
+            </div>
+          </div>
+          <button onclick="addToCart('Rasgulla', 50)" class="add-cart">Add to Cart</button>
+        </div>
+        <div class="menu-card">
+          <img src="https://static.toiimg.com/thumb/msid-112019658,width-1280,height-720,imgsize-67604,resizemode-6,overlay-toi_sw,pt-32,y_pad-40/photo.jpg" alt="Ice Cream">
+          <div class="menu-details">
+            <h3>Ice Cream</h3>
+            <p>Cold and yummy!!</p>
+            <div class="price-rating">
+              <span class="price">₹70</span>
+              <span class="rating">⭐ 5.0</span>
+            </div>
+          </div>
+          <button onclick="addToCart('Ice Cream', 70)" class="add-cart">Add to Cart</button>
+        </div>
+        <div class="menu-card">
+          <img src="https://prashantcorner.com/cdn/shop/files/RasmalaiSR-3_b0e4cd60-a20b-45e7-96f8-88776536d7c0.png?v=1720595089&width=1946" alt="Ras Malai">
+          <div class="menu-details">
+            <h3>Ras Malai</h3>
+            <p>Sweet, soft cheese balls in creamy milk.</p>
+            <div class="price-rating">
+              <span class="price">₹120</span>
+              <span class="rating">⭐ 4.7</span>
+            </div>
+          </div>
+          <button onclick="addToCart('Ras Malai', 120)" class="add-cart">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Hot Sips -->
+      <h2 class="section-title">☕ Hot Sips</h2>
+      <div class="item-grid">
+        <div class="menu-card">
+          <img src="https://t4.ftcdn.net/jpg/03/15/91/95/360_F_315919556_b7J8OGH5IobzosWBmC5NOwMoP5eZLpxn.jpg" alt="Hot Chocolate">
+          <div class="menu-details">
+            <h3>Hot Chocolate</h3>
+            <p>Rich and creamy chocolate drink.</p>
+            <div class="price-rating">
+              <span class="price">₹70</span>
+              <span class="rating">⭐ 4.5</span>
+            </div>
+          </div>
+          <button onclick="addToCart('Hot Chocolate', 70)" class="add-cart">Add to Cart</button>
+        </div>
+        <div class="menu-card">
+          <img src="https://www.funfoodfrolic.com/wp-content/uploads/2021/11/Blog-Thumbnail.jpg" alt="Kesar Milk">
+          <div class="menu-details">
+            <h3>Kesar Milk</h3>
+            <p>Fragrant saffron-infused milk.</p>
+            <div class="price-rating">
+              <span class="price">₹60</span>
+              <span class="rating">⭐ 4.5</span>
+            </div>
+          </div>
+          <button onclick="addToCart('Kesar Milk', 60)" class="add-cart">Add to Cart</button>
+        </div>
+        <div class="menu-card">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQB8cLWA04kac8YLEXkxY409g5RnwTdnAplmQ&s" alt="Espresso">
+          <div class="menu-details">
+            <h3>Espresso</h3>
+            <p>Strong and bold coffee shot.</p>
+            <div class="price-rating">
+              <span class="price">₹100</span>
+              <span class="rating">⭐ 5.0</span>
+            </div>
+          </div>
+          <button onclick="addToCart('Espresso', 100)" class="add-cart">Add to Cart</button>
+        </div>
+        <div class="menu-card">
+          <img src="https://img.freepik.com/premium-photo/popularly-known-as-masala-chai-indian-tea-is-poured-kulhad-cups_908985-55954.jpg" alt="Masala Tea">
+          <div class="menu-details">
+            <h3>Masala Tea</h3>
+            <p>Spiced Indian chai with herbs.</p>
+            <div class="price-rating">
+              <span class="price">₹30</span>
+              <span class="rating">⭐ 4.2</span>
+            </div>
+          </div>
+          <button onclick="addToCart('Masala Tea', 30)" class="add-cart">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Chill Quenchers -->
+      <h2 class="section-title">🥤 Chill Quenchers</h2>
+      <div class="item-grid">
+        <div class="menu-card">
+          <img src="https://www.shutterstock.com/image-photo/yogyakarta-indonesia-oct-142021-coca-600nw-2534402125.jpg" alt="Coca Cola">
+          <div class="menu-details">
+            <h3>Coca Cola</h3>
+            <p>Chilled fizzy cola to refresh.</p>
+            <div class="price-rating">
+              <span class="price">₹25</span>
+              <span class="rating">⭐ 4.1</span>
+            </div>
+          </div>
+          <button onclick="addToCart('Coca Cola', 25)" class="add-cart">Add to Cart</button>
+        </div>
+        <div class="menu-card">
+          <img src="https://thumbs.dreamstime.com/b/cans-mountain-dew-soft-drink-distributed-pepsico-poznan-pol-apr-brand-carbonated-372949019.jpg" alt="Dew">
+          <div class="menu-details">
+            <h3>Dew</h3>
+            <p>Dar ke Aage Jeet hai!</p>
+            <div class="price-rating">
+              <span class="price">₹90</span>
+              <span class="rating">⭐ 5.0</span>
+            </div>
+          </div>
+          <button onclick="addToCart('Dew', 90)" class="add-cart">Add to Cart</button>
+        </div>
+        <div class="menu-card">
+          <img src="https://i.pinimg.com/736x/33/86/28/338628e199d8ea4798ba99f106926026.jpg" alt="Pepsi">
+          <div class="menu-details">
+            <h3>Pepsi</h3>
+            <p>Chilled fizzy Pepsi to refresh.</p>
+            <div class="price-rating">
+              <span class="price">₹45</span>
+              <span class="rating">⭐ 4.2</span>
+            </div>
+          </div>
+          <button onclick="addToCart('Pepsi', 45)" class="add-cart">Add to Cart</button>
+        </div>
+        <div class="menu-card">
+          <img src="https://i.pinimg.com/474x/06/32/fc/0632fcfbd25aad2bd4a43c07760f22d3.jpg" alt="Sprite">
+          <div class="menu-details">
+            <h3>Sprite</h3>
+            <p>Lemon-lime chilled beverage.</p>
+            <div class="price-rating">
+              <span class="price">₹25</span>
+              <span class="rating">⭐ 4.0</span>
+            </div>
+          </div>
+          <button onclick="addToCart('Sprite', 25)" class="add-cart">Add to Cart</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="cart-sidebar">
+      <h2>Your Cart</h2>
+      <div id="cartList"></div>
+      <hr>
+      <p><strong>Total: ₹<span id="cartTotal">0</span></strong></p>
+    </div>
+  </div>
+
+  <div class="popup" id="popupMsg">Item added to cart!</div>
+
+  <script>
+    let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function updateCart() {
+      // Remove any null or bad entries
+      cartItems = cartItems.filter(item => item && item.item && item.price != null);
+
+      const cartList = document.getElementById('cartList');
+      cartList.innerHTML = '';
+      let total = 0;
+
+      cartItems.forEach((item, i) => {
+        const qty = item.qty || 1;
+        total += item.price * qty;
+
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <h4>${item.item}</h4>
+          <span>
+            Qty:
+            <button onclick="changeQty(${i}, -1)">➖</button>
+            ${qty}
+            <button onclick="changeQty(${i}, 1)">➕</button>
+          </span><br>
+          <span>₹${item.price} x ${qty} = ₹${item.price * qty}</span><br>
+          <button onclick="removeItem(${i})">❌ Remove</button>
+        `;
+        cartList.appendChild(div);
+      });
+
+      document.getElementById('cartTotal').innerText = total;
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+    }
+
+    function changeQty(index, delta) {
+      cartItems[index].qty = (cartItems[index].qty || 1) + delta;
+      if (cartItems[index].qty < 1) cartItems.splice(index, 1);
+      updateCart();
+    }
+
+    function removeItem(index) {
+      cartItems.splice(index, 1);
+      updateCart();
+    }
+
+    function showPopup() {
+      const popup = document.getElementById('popupMsg');
+      popup.style.display = 'block';
+      setTimeout(() => popup.style.display = 'none', 2000);
+    }
+
+    function addToCart(name, price) {
+      if (!name || price == null) return;
+      const exist = cartItems.find(i => i.item === name);
+      if (exist) exist.qty = (exist.qty || 1) + 1;
+      else cartItems.push({ item: name, price, qty: 1 });
+      updateCart();
+      showPopup();
+    }
+
+    document.querySelectorAll('.add-cart').forEach(btn => {
+      btn.addEventListener('click', () => {
+        addToCart(btn.getAttribute('onclick').match(/'(.+?)'/)[1],
+                  parseFloat(btn.getAttribute('onclick').match(/, (\d+)\)/)[1]));
+      });
+    });
+
+    // Initialize
+    updateCart();
+  </script>
+</body>
+</html>
