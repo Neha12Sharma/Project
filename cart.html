@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cart | Foodee</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      background: #ff7043;
+      color: white;
+    }
+    header a {
+      color: white;
+      text-decoration: none;
+      margin-left: 10px;
+    }
+    .cart-container {
+      max-width: 800px;
+      margin: 30px auto;
+    }
+    #cart-items ul {
+      list-style: none;
+      padding: 0;
+    }
+    #cart-items li {
+      margin-bottom: 8px;
+    }
+    button {
+      cursor: pointer;
+    }
+    .cart-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    .cart-table th, .cart-table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+    .cart-summary {
+      margin-top: 20px;
+    }
+    .checkout-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #ff5722;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Your Cart</h1>
+    <nav>
+      <a href="menu.html">← Back to Menu</a>
+      <a href="index.html">Home</a>
+    </nav>
+  </header>
+
+  <main class="cart-container">
+    <!-- Simple list view -->
+    <div id="cart-items"></div>
+
+    <!-- Detailed table view -->
+    <table class="cart-table">
+      <thead>
+        <tr><th>Item</th><th>Price</th><th>Qty</th><th>Total</th><th>Remove</th></tr>
+      </thead>
+      <tbody id="cart-table-body"></tbody>
+    </table>
+
+    <div class="cart-summary">
+      <h3>Cart Summary</h3>
+      <p>Subtotal: ₹<span id="subtotal">0</span></p>
+      <p>Tax (10%): ₹<span id="tax">0</span></p>
+      <p><strong>Total: ₹<span id="total">0</span></strong></p>
+    </div>
+
+    <button onclick="orderNow()" class="checkout-btn">Proceed to Checkout</button>
+  </main>
+
+  <footer style="text-align:center; margin: 30px 0;">
+    &copy; 2025 Foodee
+  </footer>
+
+  <script>
+    // Load and sanitize cart from localStorage
+    let rawCart = JSON.parse(localStorage.getItem('cart')) || [];
+    let cart = rawCart.filter(i => i && i.item && i.price != null);
+
+    function renderCart() {
+      const listEl = document.getElementById('cart-items');
+      const tbody = document.getElementById('cart-table-body');
+      let subtotal = 0;
+
+      // Simple list view
+      if (!cart.length) {
+        listEl.innerHTML = '<p>Your cart is empty.</p>';
+      } else {
+        listEl.innerHTML = '<ul>' +
+          cart.map(i => `<li>${i.item} – ₹${i.price} × ${i.qty || 1}</li>`).join('') +
+          '</ul>';
+      }
+
+      // Detailed table view
+      tbody.innerHTML = '';
+      cart.forEach((i, idx) => {
+        const qty = Math.max(1, parseInt(i.qty) || 1);
+        const price = parseInt(i.price) || 0;
+        const lineTotal = price * qty;
+        subtotal += lineTotal;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${i.item}</td>
+          <td>₹${price}</td>
+          <td>
+            <button onclick="changeQty(${idx}, -1)">−</button>
+            ${qty}
+            <button onclick="changeQty(${idx}, 1)">+</button>
+          </td>
+          <td>₹${lineTotal}</td>
+          <td><button onclick="removeItem(${idx})">❌</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      // Summary
+      const tax = Math.round(subtotal * 0.1);
+      document.getElementById('subtotal').innerText = subtotal;
+      document.getElementById('tax').innerText = tax;
+      document.getElementById('total').innerText = subtotal + tax;
+
+      // Save clean cart
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function changeQty(i, delta) {
+      const item = cart[i];
+      item.qty = (parseInt(item.qty) || 1) + delta;
+      if (item.qty < 1) cart.splice(i, 1);
+      renderCart();
+    }
+
+    function removeItem(i) {
+      cart.splice(i, 1);
+      renderCart();
+    }
+
+    function orderNow() {
+      if (!cart.length) {
+        return alert('Add something first!');
+      }
+      window.location.href = 'order.html';
+    }
+
+    // Initial render
+    renderCart();
+  </script>
+</body>
+</html>
